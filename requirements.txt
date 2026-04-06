@@ -1,0 +1,24 @@
+# Web framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+
+# Database
+sqlalchemy[asyncio]==2.0.35
+asyncpg==0.29.0
+alembic==1.13.2
+
+# Validation (included with FastAPI, pinned for consistency)
+pydantic==2.9.2
+pydantic-settings==2.5.2
+
+# HTTP client for health checks
+httpx==0.27.2
+
+# Background scheduler
+apscheduler==3.10.4
+
+# Telegram alerts
+python-telegram-bot==21.6
+
+# Utilities
+python-dotenv==1.0.1

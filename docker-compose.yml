@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: uptime-db
+    environment:
+      POSTGRES_USER: uptime
+      POSTGRES_PASSWORD: uptime
+      POSTGRES_DB: uptime_monitor
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U uptime -d uptime_monitor"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  app:
+    build: .
+    container_name: uptime-app
+    ports:
+      - "8000:8000"
+    environment:
+      # "db" is the service name — Docker Compose DNS resolves it
+      DATABASE_URL: postgresql+asyncpg://uptime:uptime@db:5432/uptime_monitor
+      DEBUG: "true"
+      TELEGRAM_BOT_TOKEN: ""
+      TELEGRAM_CHAT_ID: ""
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
