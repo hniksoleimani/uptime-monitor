@@ -19,3 +19,7 @@ terraform/terraform.tfvars
 *.tfvars
 
 
+# Kubernetes secrets (real values, not the .example templates)
+k8s/**/secret.yaml
+k8s/**/secrets.yaml
+k8s/**/*-secret.yaml
