@@ -9,14 +9,16 @@ resource "aws_eks_cluster" "main" {
   name     = "${var.project_name}-eks"
   role_arn = aws_iam_role.eks_cluster.arn
   version  = "1.31" # latest stable K8s version on EKS
-
+  access_config {
+    authentication_mode = "API_AND_CONFIG_MAP"
+  }
   vpc_config {
     subnet_ids = concat(
       aws_subnet.public[*].id,
       aws_subnet.private[*].id,
     )
-    endpoint_public_access  = true  # you can run kubectl from your laptop
-    endpoint_private_access = true  # nodes can reach the API server internally
+    endpoint_public_access  = true # you can run kubectl from your laptop
+    endpoint_private_access = true # nodes can reach the API server internally
   }
 
   depends_on = [

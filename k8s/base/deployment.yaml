@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: uptime-monitor
-          image: REPLACE_WITH_ECR_URL:latest
+          image: 456493253522.dkr.ecr.eu-central-1.amazonaws.com/uptime-monitor:latest
           imagePullPolicy: Always
           ports:
             - name: http

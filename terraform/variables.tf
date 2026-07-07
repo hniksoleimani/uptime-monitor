@@ -38,7 +38,7 @@ variable "eks_node_instance_type" {
   description = "EC2 instance type for EKS worker nodes"
   type        = string
   # default     = "t3.medium" # 2 vCPU, 4GB RAM — good balance of cost and performance
-  default     = "t3.small" # 2 vCPU, 2GB RAM — more cost-effective for small workloads
+  default = "t3.small" # 2 vCPU, 2GB RAM — more cost-effective for small workloads
 
 }
 

@@ -9,14 +9,6 @@ resource "aws_security_group" "rds" {
   description = "Allow PostgreSQL from EKS nodes only"
   vpc_id      = aws_vpc.main.id
 
-  ingress {
-    description     = "PostgreSQL from EKS"
-    from_port       = 5432
-    to_port         = 5432
-    protocol        = "tcp"
-    security_groups = [aws_security_group.eks_nodes.id]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -47,4 +39,23 @@ resource "aws_security_group" "eks_nodes" {
   }
 
   tags = { Name = "${var.project_name}-eks-nodes-sg" }
+}
+
+
+data "aws_security_group" "eks_cluster_auto" {
+  filter {
+    name   = "group-name"
+    values = ["eks-cluster-sg-${var.project_name}-eks-*"]
+  }
+  depends_on = [aws_eks_cluster.main]
+}
+
+resource "aws_security_group_rule" "rds_from_eks_cluster_sg" {
+  type                     = "ingress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.rds.id
+  source_security_group_id = data.aws_security_group.eks_cluster_auto.id
+  description              = "Allow EKS managed node group (uses cluster auto-SG) to reach RDS"
 }

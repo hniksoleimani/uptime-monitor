@@ -23,3 +23,4 @@ terraform/terraform.tfvars
 k8s/**/secret.yaml
 k8s/**/secrets.yaml
 k8s/**/*-secret.yaml
+terraform/tfplan

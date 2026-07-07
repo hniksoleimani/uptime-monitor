@@ -31,3 +31,9 @@ output "rds_database_url" {
   value       = "postgresql+asyncpg://${var.db_username}:${var.db_password}@${aws_db_instance.main.endpoint}/${var.db_name}"
   sensitive   = true
 }
+
+output "github_actions_role_arn" {
+  description = "ARN of the IAM role that GitHub Actions assumes via OIDC"
+  value       = aws_iam_role.github_actions.arn
+}
+
